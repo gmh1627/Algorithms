@@ -9,7 +9,7 @@ int main(){
         cin>>ws[i];
     sort(ws.begin(),ws.end());
     i=0,j=n-1;
-    //下述算法较啰嗦
+    //下述算法较啰嗦,容易忽略w为5，数组为1 3 3 4的情况
     /*while(ws[i]+ws[j]>w&&j>0)
         j--;
     ans+=(n-j-1);

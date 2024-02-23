@@ -92,9 +92,11 @@ int main() {
     // 使用 lower_bound 查找第一个大于或等于给定值的元素的位置
     auto lb =lower_bound(nums2.begin(), nums2.end(), 3);
     cout << "第一个大于或等于 3 的元素的位置：" << distance(nums2.begin(), lb) << endl;
+    
     //index是x在nums2中的的下标（nums2已排好序）
     int x=3;
-    int index=lower_bound(nums2.begin(),nums2.end(),x)-nums2.begin();
+    int index=lower_bound(nums2.begin(),nums2.end(),x)-nums2.begin();//lower_bound返回一个迭代器而不是int,所以要减nums2.begin()
+    
     // 使用 upper_bound 查找第一个大于给定值的元素的位置
     auto ub = upper_bound(nums2.begin(), nums2.end(), 3);
     cout << "第一个大于 3 的元素的位置：" << distance(nums2.begin(), ub) <<endl;
