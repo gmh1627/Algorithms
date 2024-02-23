@@ -9,13 +9,20 @@ int main(){
         cin>>ws[i];
     sort(ws.begin(),ws.end());
     i=0,j=n-1;
+    //下述算法较啰嗦
     /*while(ws[i]+ws[j]>w&&j>0)
         j--;
     ans+=(n-j-1);
     for(i=0;j>i;){
-        i++;
-        j--;
-        ans++;
+        if(ws[i]+ws[j]<=w){
+            i++;
+            j--;
+            ans++;
+        }
+        else{
+            j--;
+            ans++;
+        }
     }
     if(j==i)
         ans++;*/
