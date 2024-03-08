@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+std::string findLongestPalindromicSubstring(const std::string& s) {
+    int n = s.size();
+    if (n == 0) return "";
+
+    // Transform s into t.
+    // For example, s = "abba", t = "^#a#b#b#a#$".
+    // ^ and $ signs are sentinels appended to each end to avoid bounds checking
+    std::string t = "^";
+    for (int i = 0; i < n; i++) {
+        t += "#" + s.substr(i, 1);
+    }
+    t += "#$";
+
+    n = t.size();
+    std::vector<int> P(n, 0);
+    int C = 0, R = 0;
+    for (int i = 1; i < n - 1; i++) {
+        int i_mirror = 2 * C - i; // equals to i' = C - (i-C)
+
+        if (R > i) {
+            P[i] = std::min(R - i, P[i_mirror]); // Prevent overflow.
+        } else {
+            P[i] = 0; // If i is outside the R, we just reset it to 0.
+        }
+
+        // Attempt to expand palindrome centered at i
+        while (t[i + 1 + P[i]] == t[i - 1 - P[i]]) {
+            P[i]++;
+        }
+
+        // If palindrome centered at i expands past R,
+        // adjust center based on expanded palindrome.
+        if (i + P[i] > R) {
+            C = i;
+            R = i + P[i];
+        }
+    }
+
+    // Find the maximum element in P.
+    int maxLen = 0;
+    int centerIndex = 0;
+    for (int i = 1; i < n - 1; i++) {
+        if (P[i] > maxLen) {
+            maxLen = P[i];
+            centerIndex = i;
+        }
+    }
+
+    return s.substr((centerIndex - 1 - maxLen) / 2, maxLen);
+}
+
+int main() {
+    std::string s;
+    std::cin >> s;
+    std::cout << "Longest palindromic substring is: " << findLongestPalindromicSubstring(s) << std::endl;
+    return 0;
+}
